@@ -45,6 +45,169 @@ body {
     transform: translateY(-5px);
     box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
+
+.portfolio-image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.portfolio-image.fallback {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+}
+
+.modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    position: relative;
+    width: 90%;
+    height: 90%;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    animation: modalFadeIn 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.modal-image-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: #f8f9fa;
+}
+
+.modal-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.modal-info {
+    padding: 24px;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    flex-shrink: 0;
+}
+
+.modal-navigation {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.modal-navigation:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.modal-prev {
+    left: 20px;
+}
+
+.modal-next {
+    right: 20px;
+}
+
+.modal-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 1001;
+}
+
+.modal-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal-indicator.active {
+    background: white;
+    transform: scale(1.2);
+}
+
+.modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.modal-close:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: scale(1.1);
+}
+
+.gallery-item {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+}
 </style>
 </head>
 <body class="bg-gray-50">
@@ -66,6 +229,7 @@ body {
 <a href="#home" class="text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">홈</a>
 <a href="#services" class="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">서비스</a>
 <a href="#about" class="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">회사소개</a>
+<a href="#portfolio" class="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">이력</a>
 <a href="#contact" class="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">연락처</a>
 </div>
 </div>
@@ -227,6 +391,86 @@ Daper는 'Dot'과 'Paper'의 합성어로, 모든 혁신적인 아이디어가 �
 </div>
 </section>
 
+<!-- Portfolio Section -->
+<section id="portfolio" class="py-20 bg-white">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-16">
+<h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">우리의 이력</h2>
+<p class="text-xl text-gray-600 max-w-2xl mx-auto">
+Daper가 참여한 의미있는 프로젝트를 소개합니다
+</p>
+</div>
+
+<div class="max-w-4xl mx-auto">
+<!-- Main Project Card -->
+<div class="card-hover bg-gray-50 rounded-xl overflow-hidden mb-8 gallery-item" onclick="openModal(0)">
+<div class="relative h-80 bg-gradient-to-br from-blue-100 to-indigo-100 portfolio-image">
+<img src="assets/portfolio/foodbank_1.jpg" alt="서울잇다푸드뱅크 마켓 앱" class="w-full h-full object-cover" style="object-position: top;">
+<div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+<div class="text-center p-6 text-white">
+<div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+<svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+</svg>
+</div>
+<h3 class="text-2xl font-bold mb-3">서울잇다푸드뱅크</h3>
+<p class="text-lg">마켓 어플리케이션 재능기부 프로젝트</p>
+<div class="mt-4 flex items-center justify-center space-x-2">
+<span class="text-sm bg-white bg-opacity-20 px-3 py-1 rounded-full">클릭하여 갤러리 보기</span>
+<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<div class="p-8">
+<h4 class="text-2xl font-bold text-gray-900 mb-4">재능기부 프로젝트</h4>
+<p class="text-lg text-gray-600 mb-6">서울잇다푸드뱅크를 위한 마켓 어플리케이션을 재능기부로 개발하여 사회적 가치 실현에 기여했습니다. 팀원들과 함께 협업하여 사용자 친화적인 인터페이스를 구현하고, 의미있는 사회공헌 활동을 통해 기술의 가치를 실현했습니다.</p>
+<div class="flex flex-wrap gap-3 mb-6">
+<span class="px-4 py-2 bg-blue-100 text-blue-800 text-sm rounded-full font-medium">React Native</span>
+<span class="px-4 py-2 bg-green-100 text-green-800 text-sm rounded-full font-medium">Firebase</span>
+<span class="px-4 py-2 bg-purple-100 text-purple-800 text-sm rounded-full font-medium">재능기부</span>
+<span class="px-4 py-2 bg-orange-100 text-orange-800 text-sm rounded-full font-medium">팀 협업</span>
+<span class="px-4 py-2 bg-red-100 text-red-800 text-sm rounded-full font-medium">사회공헌</span>
+</div>
+<div class="flex items-center justify-center mt-4">
+  <a href="#" onclick="window.open(mainProjectUrl, '_blank'); return false;" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg shadow transition-colors">프로젝트 바로가기</a>
+</div>
+<div class="flex items-center justify-center text-blue-600 hover:text-blue-700 transition-colors">
+<span class="text-sm font-medium">프로젝트 갤러리 보기</span>
+<svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+</svg>
+</div>
+</div>
+</div>
+
+<!-- Project Gallery -->
+<div class="flex justify-center">
+<!-- Gallery Item -->
+
+</div>
+</div>
+</section>
+
+<!-- Modal -->
+<div id="imageModal" class="modal">
+<div class="modal-content">
+<button class="modal-close" onclick="closeModal()">&times;</button>
+<div class="modal-image-container">
+<img id="modalImage" class="modal-image" src="" alt="">
+<button class="modal-navigation modal-prev" onclick="prevImage()">‹</button>
+<button class="modal-navigation modal-next" onclick="nextImage()">›</button>
+<div class="modal-indicators" id="modalIndicators"></div>
+</div>
+<div class="modal-info">
+<h3 id="modalTitle" class="text-2xl font-bold text-gray-900 mb-3"></h3>
+<p id="modalDescription" class="text-lg text-gray-600"></p>
+</div>
+</div>
+</div>
+
 <!-- Contact Section -->
 <section id="contact" class="py-20 bg-white">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -300,7 +544,7 @@ Daper는 'Dot'과 'Paper'의 합성어로, 모든 혁신적인 아이디어가 �
 </div>
 <div>
 <h4 class="font-semibold text-gray-900">이메일</h4>
-<p class="text-gray-600">daper@dapercorp.com</p>
+<p class="text-gray-600">info@dapercorp.com</p>
 </div>
 </div>
 
@@ -364,6 +608,7 @@ Daper는 'Dot'과 'Paper'의 합성어로, 모든 혁신적인 아이디어가 �
 </footer>
 
 <script>
+const mainProjectUrl = "https://instagram.com/p/CW7JpgtPWhD/?utm_source=qr";
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -398,6 +643,134 @@ window.addEventListener('scroll', () => {
         if (link.getAttribute('href') === `#${current}`) {
             link.classList.remove('text-gray-600');
             link.classList.add('text-blue-600');
+        }
+    });
+});
+
+// Portfolio image fallback
+document.addEventListener('DOMContentLoaded', function() {
+    const portfolioImages = document.querySelectorAll('.portfolio-image img');
+    
+    portfolioImages.forEach(img => {
+        img.addEventListener('error', function() {
+            this.style.display = 'none';
+            this.parentElement.classList.add('fallback');
+        });
+    });
+});
+
+// Gallery data
+const galleryData = [
+    {
+        src: 'assets/portfolio/foodbank_1.jpg',
+        title: '서울잇다푸드뱅크 프로젝트',
+        description: '서울잇다푸드뱅크를 위한 마켓 어플리케이션을 재능기부로 개발하여 사회적 가치 실현에 기여했습니다. 팀원들과 함께 협업하여 사용자 친화적인 인터페이스를 구현하고, 의미있는 사회공헌 활동을 통해 기술의 가치를 실현했습니다.'
+    },
+    {
+        src: 'assets/portfolio/foodbank_2.jpg',
+        title: '개발 과정',
+        description: '팀원들과 함께 협업하여 사용자 친화적인 마켓 어플리케이션을 단계별로 개발했습니다. 기획부터 설계, 개발, 테스트까지 모든 과정에서 팀워크를 발휘했습니다.'
+    },
+    {
+        src: 'assets/portfolio/foodbank_3.jpg',
+        title: '완성된 마켓 앱',
+        description: '서울잇다푸드뱅크의 요구사항에 맞춰 직관적이고 사용하기 쉬운 마켓 어플리케이션을 완성했습니다. 사용자 경험을 최우선으로 고려한 UI/UX 디자인으로 누구나 쉽게 사용할 수 있도록 구현했습니다.'
+    },
+    {
+        src: 'assets/portfolio/foodbank_4.jpg',
+        title: '사회적 가치 실현',
+        description: '서울잇다푸드뱅크를 통해 재능기부의 의미를 되새기고 사회적 가치 실현에 기여할 수 있었습니다. 기술을 통해 사회에 긍정적인 변화를 만들어내는 것의 중요성을 깨달았고, 앞으로도 더 많은 사회공헌 활동에 참여하고 싶습니다.'
+    }
+];
+
+let currentImageIndex = 0;
+
+// Modal functions
+function openModal(startIndex = 0) {
+    currentImageIndex = startIndex;
+    updateModal();
+    
+    const modal = document.getElementById('imageModal');
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    
+    createIndicators();
+}
+
+function closeModal() {
+    const modal = document.getElementById('imageModal');
+    modal.classList.remove('show');
+    document.body.style.overflow = '';
+}
+
+function updateModal() {
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+    
+    const currentData = galleryData[currentImageIndex];
+    modalImage.src = currentData.src;
+    modalImage.alt = currentData.title;
+    modalTitle.textContent = currentData.title;
+    modalDescription.textContent = currentData.description;
+    
+    updateIndicators();
+}
+
+function prevImage() {
+    currentImageIndex = (currentImageIndex - 1 + galleryData.length) % galleryData.length;
+    updateModal();
+}
+
+function nextImage() {
+    currentImageIndex = (currentImageIndex + 1) % galleryData.length;
+    updateModal();
+}
+
+function createIndicators() {
+    const indicatorsContainer = document.getElementById('modalIndicators');
+    indicatorsContainer.innerHTML = '';
+    
+    galleryData.forEach((_, index) => {
+        const indicator = document.createElement('div');
+        indicator.className = `modal-indicator ${index === currentImageIndex ? 'active' : ''}`;
+        indicator.onclick = () => {
+            currentImageIndex = index;
+            updateModal();
+        };
+        indicatorsContainer.appendChild(indicator);
+    });
+}
+
+function updateIndicators() {
+    const indicators = document.querySelectorAll('.modal-indicator');
+    indicators.forEach((indicator, index) => {
+        indicator.classList.toggle('active', index === currentImageIndex);
+    });
+}
+
+// Close modal when clicking outside
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('imageModal');
+    
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('show')) {
+            closeModal();
+        }
+        // Navigate with arrow keys
+        if (modal.classList.contains('show')) {
+            if (e.key === 'ArrowLeft') {
+                prevImage();
+            } else if (e.key === 'ArrowRight') {
+                nextImage();
+            }
         }
     });
 });
